@@ -14,7 +14,7 @@ export interface AuthResponse {
   data?: AuthData;
 }
 
-export const authenticate = async (
+export const AuthService = async (
   username: string,
   password: string,
   cnpj: string,

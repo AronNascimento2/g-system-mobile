@@ -1,19 +1,10 @@
-// HomeScreen.js
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
-export const HomeScreen = () => {
+export function HomeScreen() {
   return (
-    <View style={styles.background}>
-      <Text>Home</Text>
+    <View>
+      <Text>Essa tela só pode ser vista por usuários autenticados</Text>
     </View>
   );
-};
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: 'flex-start', // Alterado para alinhamento à esquerda
-    justifyContent: 'center',
-    backgroundColor: 'FFF', // Defina a cor de fundo desejada
-  },
-});
+}

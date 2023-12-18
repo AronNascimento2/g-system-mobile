@@ -1,113 +1,100 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthData} from '../../../services/Authentication';
 
-export interface AuthContextData {
-  user: AuthData | null;
-  permissions: string[] | null;
-  logo: string | null; // Adicionando a logo ao contexto de autenticação
-  login: (username: string, password: string, cnpj: string) => Promise<void>;
-  logout: () => void;
+import {Alert} from 'react-native';
+import {
+  AuthService,
+  AuthData,
+  AuthResponse,
+} from '../../../services/Authentication';
+
+interface AuthContextData {
+  authData?: AuthData;
+  signIn: (email: string, password: string, cnpj: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  isLoading: boolean;
 }
 
-export const AuthContext = createContext<AuthContextData | undefined>(
-  undefined,
-);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({children}) => {
-  const [user, setUser] = useState<AuthData | null>(null);
-  const [permissions, setPermissions] = useState<string[] | null>(null);
-  const [logo, setLogo] = useState<string | null>('');
+  const [authData, setAuthData] = useState<AuthData>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadDataFromStorage = async () => {
-      try {
-        const storedToken = (await AsyncStorage.getItem('token')) ?? '';
-        const storedExpiration =
-          (await AsyncStorage.getItem('expiration')) ?? '';
-        const storedPermissions =
-          (await AsyncStorage.getItem('permissions')) ?? '';
-        const storedLogo = (await AsyncStorage.getItem('logo')) ?? '';
-
-        if (
-          storedToken &&
-          storedExpiration &&
-          storedPermissions &&
-          storedLogo
-        ) {
-          const expiration = new Date(storedExpiration).getTime();
-          const currentDate = new Date().getTime();
-
-          if (expiration > currentDate) {
-            setUser({
-              JWT: {Token: storedToken},
-              Permissions: JSON.parse(storedPermissions),
-            });
-            setPermissions(JSON.parse(storedPermissions));
-            setLogo(storedLogo);
-          }
-        }
-      } catch (error) {
-        console.error('Error loading data from AsyncStorage:', error);
-      }
-    };
-
-    loadDataFromStorage();
+    loadStorageData();
   }, []);
 
-  const login = useCallback(
-    async (username: string, password: string, cnpj: string) => {
-      try {
-        const response = await authenticate(username, password, cnpj);
-        if (response.success && response.data) {
-          const {JWT, Permissions, Logo} = response.data;
-          setUser({JWT, Permissions});
-          setPermissions(Permissions);
-          setLogo(Logo);
-
-          await AsyncStorage.setItem(
-            'permissions',
-            JSON.stringify(Permissions),
-          );
-          await AsyncStorage.setItem('logo', Logo);
-        } else {
-          throw new Error(response.message ?? 'Erro ao autenticar');
-        }
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-    [],
-  );
-
-  const logout = useCallback(async () => {
+  async function loadStorageData(): Promise<void> {
     try {
-      setUser(null);
-      setPermissions(null);
-      setLogo(null);
+      const authDataSerialized = await AsyncStorage.getItem('@AuthData');
+      if (authDataSerialized) {
+        const _authData: AuthData = JSON.parse(authDataSerialized);
 
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('expiration');
-      await AsyncStorage.removeItem('permissions');
-      await AsyncStorage.removeItem('logo');
+        if (tokenExpired(_authData?.JWT?.Expiration)) {
+          // Se o token estiver expirado, limpe os dados e redirecione para a tela de login
+          signOut();
+          return;
+        }
+
+        setAuthData(_authData);
+      }
     } catch (error) {
-      console.error('Error clearing data from AsyncStorage:', error);
+      // Handle error
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  }
 
-  const authContextValue = useMemo(() => {
-    return {user, permissions, logo, login, logout};
-  }, [user, permissions, logo, login, logout]);
+  // Verifica se o token expirou
+  function tokenExpired(expirationDate: string | undefined): boolean {
+    if (!expirationDate) {
+      return true; // Se não houver data de expiração, consideramos que o token está expirado
+    }
+
+    const expiration = new Date(expirationDate).getTime();
+    const current = new Date().getTime();
+
+    // Verifica se a hora atual (current) é posterior à hora de expiração (expiration)
+    return current > expiration;
+  }
+
+  // ... (restante do código)
+
+  async function signIn(email: string, password: string, cnpj: string) {
+    try {
+      const response: AuthResponse = await AuthService(email, password, cnpj);
+
+      if (response.success && response.data) {
+        const _authData: AuthData = response.data;
+        setAuthData(_authData);
+        AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
+      } else {
+        throw new Error(response.message || 'Erro ao autenticar');
+      }
+    } catch (error) {
+      Alert.alert(error.message, 'Tente novamente');
+    }
+  }
+
+  async function signOut() {
+    setAuthData(undefined);
+    AsyncStorage.removeItem('@AuthData');
+  }
 
   return (
-    <AuthContext.Provider value={authContextValue}>
+    <AuthContext.Provider value={{authData, signIn, signOut, isLoading}}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export function useAuth(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
+}
