@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
@@ -25,7 +26,13 @@ export const LoginScreen = () => {
       console.error('Erro ao fazer login:', error);
     }
   };
-
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.horizontal]}>
+        <ActivityIndicator size="large" color="#2980b9" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
@@ -79,6 +86,11 @@ export const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  horizontal: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
