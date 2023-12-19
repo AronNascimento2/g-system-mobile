@@ -17,23 +17,15 @@ import {
   CustomerScreen,
   DirectionScreen,
   EquipmentScreen,
-  HomeScreen,
   PendencieScreen,
   SaleScreen,
   ScheduleScreen,
-  SettingScreen,
   SinisterScreen,
+  SumaryScreen,
   SupervisionScreen,
 } from '../screens';
 
 export const ROUTES_PATHS = [
-  {
-    path: 'Sumario',
-    element: HomeScreen,
-    title: 'Sumario',
-    isPrivate: true,
-    permissions: [],
-  },
   {
     path: 'Atendimento',
     element: AttendanceScreen,
@@ -42,9 +34,9 @@ export const ROUTES_PATHS = [
     Permissions: [],
   },
   {
-    path: 'Cliente',
+    path: 'Clientes',
     element: CustomerScreen,
-    title: 'Cliente',
+    title: 'Clientes',
     isPrivate: true,
     Permissions: [],
   },
@@ -105,10 +97,11 @@ export const ROUTES_PATHS = [
 
     Permissions: [],
   },
+
   {
-    path: 'Configuracoes',
-    element: SettingScreen,
-    title: 'Configuracoes',
+    path: 'Sumario ',
+    element: SumaryScreen,
+    title: 'Sumario',
     isPrivate: true,
     Permissions: [],
   },

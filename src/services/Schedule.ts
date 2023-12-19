@@ -49,5 +49,6 @@ export const fetchAppointments = async (
   }
 
   const data = await response.json();
+  console.log('Appointments', data);
   return data as AppointmentType[];
 };
