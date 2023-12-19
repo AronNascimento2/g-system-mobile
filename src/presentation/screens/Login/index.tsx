@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#3498db',
+    backgroundColor: '#2980b9',
     color: 'black',
   },
   containerLogo: {
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10,
     width: '100%',
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',
