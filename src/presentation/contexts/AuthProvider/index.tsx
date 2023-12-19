@@ -20,7 +20,6 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC = ({children}) => {
   const [authData, setAuthData] = useState<AuthData>();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(authData);
 
   useEffect(() => {
     loadStorageData();

@@ -5,6 +5,7 @@ import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const HomeScreen = () => {
             }
           }}
           disabled={disabled}>
-          <FontAwesomeIcon icon={route.icon} style={styles.icon} />
+          <FontAwesomeIcon icon={route.icon as IconProp} style={styles.icon} />
 
           <Text style={styles.text}>{route?.title}</Text>
         </TouchableOpacity>
@@ -48,7 +49,7 @@ const HomeScreen = () => {
         style={styles.iconContainer}
         onPress={handleLogout}>
         <FontAwesomeIcon icon={faSignOutAlt} style={styles.icon} />
-        <Text style={{color: 'black'}}>Sair</Text>
+        <Text style={styles.text}>Sair</Text>
       </TouchableOpacity>,
     );
 
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     color: '#999', // Cor do texto para botão desabilitado
   },
   text: {
+    fontSize: 16,
     color: 'black',
   },
   wrapper: {
