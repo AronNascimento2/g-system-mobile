@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useAuth} from '../../contexts/AuthProvider'; // Verifique se o caminho está correto
 import {TextInputMask} from 'react-native-masked-text';
+import {SplashScreen} from '../SplashScreen/Splash';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -27,11 +28,7 @@ export const LoginScreen = () => {
     }
   };
   if (loading) {
-    return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#2980b9" />
-      </View>
-    );
+    return <SplashScreen />;
   }
   return (
     <View style={styles.container}>
