@@ -19,20 +19,20 @@ https://reactnative.dev/docs/environment-setup
 **Para usar seu smartphone**
 
 desbloqueie as opções de desenvolvedor 
-e na tela de opções de desenvolvedor ative a opção Depuração USB
+e na tela de opções de desenvolvedor ative aopção Depuração USB
 
 
 # Rode o projeto
-abra dois terminais
+**Abra dois terminais**
 
 no primeiro use o comando
-$ npm start
+```$ npm start```
 
 
 no segundo
-$ npm run android
+```$ npm run android```
 
-Obs.se voce esta usando o seu smartphone : antes de utilizar o comando npm run android mantenha a tela desbloqueada para nao gerar erros
+**Obs.se voce esta usando o seu smartphone :** antes de utilizar o comando ```$ npm run android``` mantenha a tela desbloqueada para não gerar erros
 
 
 # Autenticação
