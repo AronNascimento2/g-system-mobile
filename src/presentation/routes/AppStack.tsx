@@ -1,21 +1,19 @@
 import React from 'react';
-
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ROUTES_PATHS} from '../constants/routesPaths';
 
-import {HomeScreen} from '../screens/HomeScreen';
-
-// interface App
-
-export interface AppParamList {
-  Home: undefined;
-  Settings: undefined;
-}
 const Stack = createNativeStackNavigator();
 
 export function AppStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator initialRouteName="Login">
+      {ROUTES_PATHS.map(route => (
+        <Stack.Screen
+          key={route.path}
+          name={route.title}
+          component={route.element as React.ComponentType}
+        />
+      ))}
     </Stack.Navigator>
   );
 }
