@@ -77,9 +77,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#3498db',
     display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   containerLogo: {
-    height: 120,
+    height: 150,
     backgroundColor: '#fff',
     padding: 10,
     justifyContent: 'center',
@@ -91,20 +93,20 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'center', // Centraliza os ícones horizontalmente
-    alignItems: 'center', // Centraliza os ícones verticalmente
     flexWrap: 'wrap',
     width: '100%',
     height: '100%',
-    gap: 7,
+    gap: 15,
     padding: 15,
   },
   iconContainer: {
+    elevation: 20,
+
     alignItems: 'center',
     justifyContent: 'center',
-    width: 180,
-    height: 100,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     backgroundColor: '#fff',
   },
   disabledIcon: {
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   wrapper: {
+    paddingTop: 40,
     flex: 1,
     display: 'flex',
     alignItems: 'center',

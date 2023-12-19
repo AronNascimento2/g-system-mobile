@@ -7,26 +7,68 @@ import {
   ScrollView,
 } from 'react-native';
 import {getFirstAndLastDayOfMonth} from '../../utils/getFirstAndLastDayOfMonth';
-import {fetchAppointments} from '../../../services/Schedule';
-import {useAuth} from '../../contexts/AuthProvider';
-import {SplashScreen} from '../SplashScreen/Splash';
+import {fetchAppointments, AppointmentType} from '../../../services/Schedule';
+
+interface AppointmentProps {
+  appointment: AppointmentType;
+}
+
+const AppointmentCard: React.FC<AppointmentProps> = ({appointment}) => {
+  return (
+    <View style={styles.appointment}>
+      <View style={styles.cardContainer}>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameCodeContainer}>
+            <Text style={styles.clientName}>{appointment.Cliente}</Text>
+            <Text style={styles.codigo}>{appointment.Codigo}</Text>
+          </View>
+        </View>
+        <View style={styles.containerInfos}>
+          <View style={styles.appointment}>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Serviço:</Text>
+              <Text style={styles.info}>{appointment.Servico}</Text>
+            </View>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Data:</Text>
+              <Text style={styles.info}>{appointment.Data}</Text>
+            </View>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Período:</Text>
+              <Text style={styles.info}>{appointment.Periodo}</Text>
+            </View>
+          </View>
+          <View style={styles.appointment}>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Técnico:</Text>
+              <Text style={styles.info}>{appointment.Tecnico}</Text>
+            </View>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Ordem:</Text>
+              <Text style={styles.info}>{appointment.Ordem}</Text>
+            </View>
+            <View style={styles.appointmentInfo}>
+              <Text style={styles.title}>Endereço:</Text>
+              <Text style={styles.info}>{appointment.Endereco}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export const ScheduleScreen: React.FC = () => {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState<AppointmentType[]>([]);
   const [loading, setLoading] = useState(true);
   const {firstDay, lastDay} = getFirstAndLastDayOfMonth();
-  const {authData} = useAuth(); // Obtém os dados de autenticação do contexto
 
   const fetchData = async () => {
     const startDate = firstDay;
     const endDate = lastDay;
 
     try {
-      const data = await fetchAppointments(
-        startDate,
-        endDate,
-        authData?.JWT?.Token,
-      ); // Passa o token JWT na chamada da função
+      const data = await fetchAppointments(startDate, endDate); // Passa o token JWT na chamada da função
       setAppointments(data);
     } catch (error) {
       console.error('Erro ao buscar os agendamentos:', error);
@@ -37,56 +79,22 @@ export const ScheduleScreen: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, [authData]); // Atualiza ao mudar o estado de autenticação
+  }, []); // Atualiza ao mudar o estado de autenticação
 
   if (loading) {
-    return <SplashScreen />;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#3498db" />
+        <Text style={{color: '#3498db'}}>Carregando...</Text>
+      </View>
+    );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        {appointments.map((appointment: any) => (
-          <View key={appointment.Codigo} style={styles.appointment}>
-            <View style={styles.cardContainer}>
-              <View style={styles.nameContainer}>
-                <View style={styles.nameCodeContainer}>
-                  <Text style={styles.clientName}>{appointment.Cliente}</Text>
-                  <Text style={styles.codigo}>{appointment.Codigo}</Text>
-                </View>
-              </View>
-              <View style={styles.containerInfos}>
-                <View style={styles.appointment}>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Serviço:</Text>
-                    <Text style={styles.info}>{appointment.Servico}</Text>
-                  </View>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Data:</Text>
-                    <Text style={styles.info}>{appointment.Data}</Text>
-                  </View>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Período:</Text>
-                    <Text style={styles.info}>{appointment.Periodo}</Text>
-                  </View>
-                </View>
-                <View style={styles.appointment}>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Técnico:</Text>
-                    <Text style={styles.info}>{appointment.Tecnico}</Text>
-                  </View>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Ordem:</Text>
-                    <Text style={styles.info}>{appointment.Ordem}</Text>
-                  </View>
-                  <View style={styles.appointmentInfo}>
-                    <Text style={styles.title}>Endereço:</Text>
-                    <Text style={styles.info}>{appointment.Endereco}</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
+        {appointments.map((appointment: AppointmentType) => (
+          <AppointmentCard key={appointment.Codigo} appointment={appointment} />
         ))}
       </View>
     </ScrollView>
@@ -94,6 +102,11 @@ export const ScheduleScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scrollContainer: {
     flexGrow: 1,
     color: 'black',

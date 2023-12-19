@@ -1,52 +1,61 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ROUTES_PATHS} from '../constants/routesPaths';
-import {SettingScreen} from '../screens';
-import HomeScreen from '../screens/Home';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHome, faScrewdriverWrench} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigationState} from '@react-navigation/native';
+import {LoginScreen} from '../screens';
+import {getTokenAndExpiration} from '../helpers/getAsyncStorage';
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Define the FontAwesomeIcon components outside the component
-const homeIcon = <FontAwesomeIcon icon={faHome} />;
-const settingsIcon = <FontAwesomeIcon icon={faScrewdriverWrench} />;
-
-const HomeTabNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Home',
-          tabBarIcon: () => homeIcon, // Pass the component as a prop
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Settings',
-          tabBarIcon: () => settingsIcon, // Pass the component as a prop
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
-
 export const AppStack = () => {
+  const navigation = useNavigationState(state => state);
+  const [tokenExpired, setTokenExpired] = useState(false);
+
+  useEffect(() => {
+    const checkTokenExpiration = async () => {
+      try {
+        const {token, expiration} = await getTokenAndExpiration();
+
+        if (token && expiration) {
+          const expirationDate = new Date(expiration).getTime();
+          const currentDate = new Date().getTime();
+
+          if (currentDate > expirationDate) {
+            await AsyncStorage.removeItem('@AuthData');
+            setTokenExpired(true);
+          }
+        }
+      } catch (error) {
+        console.log('Erro ao verificar expiração do token:', error);
+      }
+    };
+
+    checkTokenExpiration();
+  }, [navigation]);
+
+  if (tokenExpired) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="HomeStack"
-        component={HomeTabNavigator}
-        options={{headerShown: false}}
-      />
+      {ROUTES_PATHS.map(route => (
+        <Stack.Screen
+          key={route.path}
+          name={route.title}
+          component={route.element}
+          options={{headerShown: false}}
+        />
+      ))}
     </Stack.Navigator>
   );
 };

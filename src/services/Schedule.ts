@@ -1,7 +1,5 @@
-// appointmentService.ts
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAuth} from '../presentation/contexts/AuthProvider';
+import {getTokenAndExpiration} from '../presentation/helpers/getAsyncStorage';
 
 export type AppointmentType = {
   Data: string;
@@ -31,8 +29,9 @@ export type AppointmentType = {
 export const fetchAppointments = async (
   startDate: string,
   endDate: string,
-  token: string | undefined, // Token JWT como parâmetro
 ): Promise<AppointmentType[]> => {
+  const {token} = await getTokenAndExpiration();
+
   const response = await fetch(
     `https://api.gsystem.com.br/api/Agendamentos?Data[Inicial]=${startDate}&Data[Final]=${endDate}`,
     {

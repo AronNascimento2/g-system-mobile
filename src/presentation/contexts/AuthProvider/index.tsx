@@ -77,7 +77,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
   async function signOut() {
     setAuthData(undefined);
-    AsyncStorage.removeItem('@AuthData');
+    await AsyncStorage.removeItem('@AuthData');
   }
 
   return (
