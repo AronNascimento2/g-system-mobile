@@ -24,6 +24,7 @@ e na tela de opções de desenvolvedor ative aopção Depuração USB
 
 # Rode o projeto
 abra dois terminais
+
 no primeiro use o comando
 $ npm start
 
