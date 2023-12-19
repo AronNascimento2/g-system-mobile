@@ -12,18 +12,18 @@ $ npm install
 
 # Instale o Android Studio ou  use seu smartphone,
 
-**Instalação AndroidStudio**
+**Para Instalar e configurar com o AndroidStudio**
 ```
 https://reactnative.dev/docs/environment-setup
 ```
-**Usar seu smartphone**
+**Para usar seu smartphone**
 
 desbloqueie as opções de desenvolvedor 
 e na tela de opções de desenvolvedor ative aopção Depuração USB
 
 
 # Rode o projeto
-**Abra dois terminais**
+abra dois terminais
 
 no primeiro use o comando
 $ npm start
