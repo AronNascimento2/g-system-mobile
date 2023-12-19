@@ -107,7 +107,7 @@ export const ROUTES_PATHS = [
   },
 
   {
-    path: 'Sumario ',
+    path: 'Sumario',
     element: SumaryScreen,
     title: 'Sumario',
     isPrivate: true,

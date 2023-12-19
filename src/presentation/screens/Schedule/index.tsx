@@ -41,7 +41,7 @@ export const ScheduleScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#3498db" />
       </View>
     );
   }
