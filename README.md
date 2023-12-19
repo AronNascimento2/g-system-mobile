@@ -25,11 +25,11 @@ e na tela de opções de desenvolvedor ative aopção Depuração USB
 # Rode o projeto
 **Abra dois terminais**
 
-no primeiro use o comando
+-No primeiro use o comando
 ```$ npm start```
 
 
-no segundo
+-No segundo
 ```$ npm run android```
 
 **Obs.se voce esta usando o seu smartphone :** antes de utilizar o comando ```$ npm run android``` mantenha a tela desbloqueada para não gerar erros
