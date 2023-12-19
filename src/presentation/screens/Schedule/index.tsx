@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import {getFirstAndLastDayOfMonth} from '../../utils/getFirstAndLastDayOfMonth';
 import {fetchAppointments} from '../../../services/Schedule';

@@ -7,7 +7,6 @@ import {useAuth} from '../../contexts/AuthProvider';
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {signOut, authData} = useAuth();
-  console.log(authData?.Permissions);
 
   const handleIconPress = path => {
     navigation.navigate(path);
@@ -16,9 +15,10 @@ const HomeScreen = () => {
   const handleLogout = () => {
     signOut();
   };
+  const filteredRoutes = ROUTES_PATHS.filter(route => route.title !== 'Home');
 
   const renderIcons = () => {
-    const icons = ROUTES_PATHS.map(route => {
+    const icons = filteredRoutes.map(route => {
       const hasPermission = authData?.Permissions?.includes(route.title);
       const disabled = !hasPermission;
 

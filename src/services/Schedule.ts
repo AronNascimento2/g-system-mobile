@@ -28,8 +28,6 @@ export type AppointmentType = {
   ValorAdicional?: number;
 };
 
-// appointmentService.ts
-
 export const fetchAppointments = async (
   startDate: string,
   endDate: string,
@@ -49,6 +47,5 @@ export const fetchAppointments = async (
   }
 
   const data = await response.json();
-  console.log('Appointments', data);
   return data as AppointmentType[];
 };

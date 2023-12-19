@@ -24,8 +24,16 @@ import {
   SumaryScreen,
   SupervisionScreen,
 } from '../screens';
+import HomeScreen from '../screens/Home';
 
 export const ROUTES_PATHS = [
+  {
+    path: 'Home',
+    element: HomeScreen,
+    title: 'Home',
+    isPrivate: true,
+    Permissions: [],
+  },
   {
     path: 'Atendimento',
     element: AttendanceScreen,

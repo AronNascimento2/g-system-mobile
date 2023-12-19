@@ -60,8 +60,6 @@ export const AuthProvider: React.FC = ({children}) => {
     return current > expiration;
   }
 
-  // ... (restante do código)
-
   async function signIn(email: string, password: string, cnpj: string) {
     try {
       const response: AuthResponse = await AuthService(email, password, cnpj);
