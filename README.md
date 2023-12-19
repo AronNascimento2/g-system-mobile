@@ -33,7 +33,7 @@ $ npm run android
 
 Obs.se voce esta usando o seu smartphone : antes de utilizar o comando npm run android mantenha a tela desbloqueada para nao gerar erros
 #
-...
+
 # Autenticação
 CNPJ:23.189.114/0001-27
 
