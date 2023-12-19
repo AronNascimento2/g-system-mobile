@@ -9,6 +9,7 @@ import {
 import {getFirstAndLastDayOfMonth} from '../../utils/getFirstAndLastDayOfMonth';
 import {fetchAppointments} from '../../../services/Schedule';
 import {useAuth} from '../../contexts/AuthProvider';
+import {SplashScreen} from '../SplashScreen/Splash';
 
 export const ScheduleScreen: React.FC = () => {
   const [appointments, setAppointments] = useState([]);
@@ -39,11 +40,7 @@ export const ScheduleScreen: React.FC = () => {
   }, [authData]); // Atualiza ao mudar o estado de autenticação
 
   if (loading) {
-    return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#3498db" />
-      </View>
-    );
+    return <SplashScreen />;
   }
 
   return (
