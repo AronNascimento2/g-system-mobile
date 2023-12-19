@@ -2,8 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ROUTES_PATHS} from '../constants/routesPaths';
-import HomeScreen from '../screens/Home';
-import {SettingScreen} from '../screens';
+import {ScheduleScreen, SettingScreen} from '../screens';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,7 +26,7 @@ const HomeTabNavigator = () => {
     <Tab.Navigator>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={ScheduleScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Home',

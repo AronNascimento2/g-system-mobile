@@ -3,7 +3,6 @@ import {View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
