@@ -1,16 +1,16 @@
-// import {
-//   faCalendarCheck,
-//   faChartLine,
-//   faExclamation,
-//   faHandHoldingDollar,
-//   faHandshake,
-//   faHeadset,
-//   faMagnifyingGlass,
-//   faScrewdriverWrench,
-//   faToolbox,
-//   faUserSecret,
-//   faUserTie,
-// } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendarCheck,
+  faChartLine,
+  faExclamation,
+  faHandHoldingDollar,
+  faHandshake,
+  faHeadset,
+  faMagnifyingGlass,
+  faPeopleGroup,
+  faToolbox,
+  faUserSecret,
+  faUserTie,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   AttendanceScreen,
   ChargeScreen,
@@ -40,6 +40,7 @@ export const ROUTES_PATHS = [
     title: 'Atendimento',
     isPrivate: true,
     Permissions: [],
+    icon: faHeadset,
   },
   {
     path: 'Clientes',
@@ -47,6 +48,7 @@ export const ROUTES_PATHS = [
     title: 'Clientes',
     isPrivate: true,
     Permissions: [],
+    icon: faPeopleGroup,
   },
   {
     path: 'Vendas',
@@ -54,6 +56,7 @@ export const ROUTES_PATHS = [
     title: 'Vendas',
     isPrivate: true,
     Permissions: [],
+    icon: faHandshake,
   },
   {
     path: 'Pendencias',
@@ -61,6 +64,7 @@ export const ROUTES_PATHS = [
     title: 'Pendencias',
     isPrivate: true,
     Permissions: [],
+    icon: faExclamation,
   },
   {
     path: 'Sinistros',
@@ -68,6 +72,7 @@ export const ROUTES_PATHS = [
     title: 'Sinistros',
     isPrivate: true,
     Permissions: [],
+    icon: faUserSecret,
   },
   {
     path: 'Cobrancas',
@@ -75,6 +80,7 @@ export const ROUTES_PATHS = [
     title: 'Cobrancas',
     isPrivate: true,
     Permissions: [],
+    icon: faHandHoldingDollar,
   },
   {
     path: 'Agenda',
@@ -82,6 +88,7 @@ export const ROUTES_PATHS = [
     title: 'Agenda',
     isPrivate: true,
     Permissions: [],
+    icon: faCalendarCheck,
   },
   {
     path: 'Equipamentos',
@@ -89,6 +96,7 @@ export const ROUTES_PATHS = [
     title: 'Equipamentos',
     isPrivate: true,
     Permissions: [],
+    icon: faToolbox,
   },
   {
     path: 'Supervisao',
@@ -96,12 +104,14 @@ export const ROUTES_PATHS = [
     title: 'Supervisao',
     isPrivate: true,
     Permissions: [],
+    icon: faMagnifyingGlass,
   },
   {
     path: 'Diretoria',
     element: DirectionScreen,
     title: 'Diretoria',
     isPrivate: true,
+    icon: faUserTie,
 
     Permissions: [],
   },
@@ -112,5 +122,6 @@ export const ROUTES_PATHS = [
     title: 'Sumario',
     isPrivate: true,
     Permissions: [],
+    icon: faChartLine,
   },
 ];

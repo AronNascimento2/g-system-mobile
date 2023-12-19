@@ -3,6 +3,8 @@ import {View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -32,6 +34,8 @@ const HomeScreen = () => {
             }
           }}
           disabled={disabled}>
+          <FontAwesomeIcon icon={route.icon} style={styles.icon} />
+
           <Text style={styles.text}>{route?.title}</Text>
         </TouchableOpacity>
       );
@@ -43,7 +47,8 @@ const HomeScreen = () => {
         key="logout"
         style={styles.iconContainer}
         onPress={handleLogout}>
-        <Text style={styles.text}>Sair</Text>
+        <FontAwesomeIcon icon={faSignOutAlt} style={styles.icon} />
+        <Text style={{color: 'black'}}>Sair</Text>
       </TouchableOpacity>,
     );
 
