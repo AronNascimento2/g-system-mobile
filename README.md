@@ -19,7 +19,7 @@ https://reactnative.dev/docs/environment-setup
 **Para usar seu smartphone**
 
 desbloqueie as opções de desenvolvedor 
-e na tela de opções de desenvolvedor ative aopção Depuração USB
+e na tela de opções de desenvolvedor ative a opção Depuração USB
 
 
 # Rode o projeto
