@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   iconContainer: {
-    elevation: 20,
+    elevation: 5,
 
     alignItems: 'center',
     justifyContent: 'center',
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: '#3498db',
-    elevation: 20,
   },
 
   container: {
@@ -125,13 +124,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerLogo: {
+    elevation: 5,
+
     height: 150,
     width: '100%',
     backgroundColor: '#fff',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 20,
   },
   wrapper: {
     paddingTop: 40,
