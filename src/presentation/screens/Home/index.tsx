@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     elevation: 5,
-
     alignItems: 'center',
     justifyContent: 'center',
     width: 90,
@@ -124,18 +123,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerLogo: {
-    elevation: 5,
-
+    elevation: 2,
     height: 150,
     width: '100%',
+    paddingTop: 10,
     backgroundColor: '#fff',
-    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   wrapper: {
+    paddingRight: 10,
+
     paddingTop: 40,
     flex: 1,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
