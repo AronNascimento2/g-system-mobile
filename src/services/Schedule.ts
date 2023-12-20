@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getTokenAndExpiration} from '../presentation/helpers/getAsyncStorage';
 
 export type AppointmentType = {
@@ -44,6 +43,7 @@ export const fetchAppointments = async (
   if (!response.ok) {
     throw new Error('Erro ao buscar os agendamentos');
   }
+  console.log(data);
 
   const data = await response.json();
   return data as AppointmentType[];
