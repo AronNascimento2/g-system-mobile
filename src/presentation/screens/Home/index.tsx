@@ -41,7 +41,7 @@ const HomeScreen = () => {
             />
           </TouchableOpacity>
           <Text style={[styles.text, disabled ? styles.disabledText : null]}>
-            {route?.title}
+            {route?.label}
           </Text>
         </View>
       );

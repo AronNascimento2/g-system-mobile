@@ -4,6 +4,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 export const TokenValidityChecker = () => {
   const {authData, signOut} = useAuth();
+  console.log(authData?.JWT.Expiration);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -20,4 +21,7 @@ export const TokenValidityChecker = () => {
       checkTokenValidity();
     }, [authData, signOut]),
   );
+
+  // Retorne null ou um elemento JSX se necessário
+  return null;
 };
