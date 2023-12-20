@@ -26,31 +26,37 @@ const HomeScreen = () => {
       const disabled = !hasPermission;
 
       return (
-        <TouchableOpacity
-          key={route.path}
-          style={[styles.iconContainer, disabled ? styles.disabledIcon : null]}
-          onPress={() => {
-            if (!disabled) {
-              handleIconPress(route.path);
-            }
-          }}
-          disabled={disabled}>
-          <FontAwesomeIcon icon={route.icon as IconProp} style={styles.icon} />
-
+        <View key={route.path} style={styles.iconTextContainer}>
+          <TouchableOpacity
+            style={[
+              styles.iconContainer,
+              disabled ? styles.disabledIcon : null,
+            ]}
+            onPress={() => {
+              if (!disabled) {
+                handleIconPress(route.path);
+              }
+            }}
+            disabled={disabled}>
+            <FontAwesomeIcon
+              size={25}
+              icon={route.icon as IconProp}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
           <Text style={styles.text}>{route?.title}</Text>
-        </TouchableOpacity>
+        </View>
       );
     });
 
     // Adicionando o botão "Sair"
     icons.push(
-      <TouchableOpacity
-        key="logout"
-        style={styles.iconContainer}
-        onPress={handleLogout}>
-        <FontAwesomeIcon icon={faSignOutAlt} style={styles.icon} />
+      <View key="logout" style={styles.iconTextContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={handleLogout}>
+          <FontAwesomeIcon size={25} icon={faSignOutAlt} style={styles.icon} />
+        </TouchableOpacity>
         <Text style={styles.text}>Sair</Text>
-      </TouchableOpacity>,
+      </View>,
     );
 
     return icons;
@@ -73,20 +79,14 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3498db',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  containerLogo: {
-    height: 150,
-    backgroundColor: '#fff',
-    padding: 10,
-    justifyContent: 'center',
+  iconTextContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
+  icon: {
+    color: '#fff',
+  },
+
   image: {
     flex: 1,
     width: '100%',
@@ -96,18 +96,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     height: '100%',
-    gap: 15,
-    padding: 15,
+    gap: 30,
   },
   iconContainer: {
     elevation: 20,
 
     alignItems: 'center',
     justifyContent: 'center',
-    width: 120,
-    height: 120,
+    width: 90,
+    height: 90,
     borderRadius: 60,
-    backgroundColor: '#fff',
+    backgroundColor: '#3498db',
   },
   disabledIcon: {
     backgroundColor: '#ccc',
@@ -115,14 +114,30 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: 'black',
+    color: '#3498db',
+    elevation: 20,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerLogo: {
+    height: 150,
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 20,
   },
   wrapper: {
     paddingTop: 40,
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

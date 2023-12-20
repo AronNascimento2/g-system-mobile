@@ -43,6 +43,40 @@ export const ROUTES_PATHS = [
     icon: faHeadset,
   },
   {
+    path: 'Sinistros',
+    element: SinisterScreen,
+    title: 'Sinistros',
+    isPrivate: true,
+    Permissions: [],
+    icon: faUserSecret,
+  },
+  {
+    path: 'Equipamentos',
+    element: EquipmentScreen,
+    title: 'Equipamentos',
+    isPrivate: true,
+    Permissions: [],
+    icon: faToolbox,
+  },
+
+  {
+    path: 'Supervisao',
+    element: SupervisionScreen,
+    title: 'Supervisao',
+    isPrivate: true,
+    Permissions: [],
+    icon: faMagnifyingGlass,
+  },
+
+  {
+    path: 'Vendas',
+    element: SaleScreen,
+    title: 'Vendas',
+    isPrivate: true,
+    Permissions: [],
+    icon: faHandshake,
+  },
+  {
     path: 'Clientes',
     element: CustomerScreen,
     title: 'Clientes',
@@ -51,12 +85,22 @@ export const ROUTES_PATHS = [
     icon: faPeopleGroup,
   },
   {
-    path: 'Vendas',
-    element: SaleScreen,
-    title: 'Vendas',
+    path: 'Cobrancas',
+    element: ChargeScreen,
+    title: 'Cobrancas',
     isPrivate: true,
     Permissions: [],
-    icon: faHandshake,
+    icon: faHandHoldingDollar,
+  },
+
+  {
+    path: 'Diretoria',
+    element: DirectionScreen,
+    title: 'Diretoria',
+    isPrivate: true,
+    icon: faUserTie,
+
+    Permissions: [],
   },
   {
     path: 'Pendencias',
@@ -67,53 +111,12 @@ export const ROUTES_PATHS = [
     icon: faExclamation,
   },
   {
-    path: 'Sinistros',
-    element: SinisterScreen,
-    title: 'Sinistros',
-    isPrivate: true,
-    Permissions: [],
-    icon: faUserSecret,
-  },
-  {
-    path: 'Cobrancas',
-    element: ChargeScreen,
-    title: 'Cobrancas',
-    isPrivate: true,
-    Permissions: [],
-    icon: faHandHoldingDollar,
-  },
-  {
     path: 'Agenda',
     element: ScheduleScreen,
     title: 'Agenda',
     isPrivate: true,
     Permissions: [],
     icon: faCalendarCheck,
-  },
-  {
-    path: 'Equipamentos',
-    element: EquipmentScreen,
-    title: 'Equipamentos',
-    isPrivate: true,
-    Permissions: [],
-    icon: faToolbox,
-  },
-  {
-    path: 'Supervisao',
-    element: SupervisionScreen,
-    title: 'Supervisao',
-    isPrivate: true,
-    Permissions: [],
-    icon: faMagnifyingGlass,
-  },
-  {
-    path: 'Diretoria',
-    element: DirectionScreen,
-    title: 'Diretoria',
-    isPrivate: true,
-    icon: faUserTie,
-
-    Permissions: [],
   },
 
   {
