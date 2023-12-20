@@ -7,6 +7,7 @@ import {
   faHeadset,
   faMagnifyingGlass,
   faPeopleGroup,
+  faScrewdriverWrench,
   faToolbox,
   faUserSecret,
   faUserTie,
@@ -134,6 +135,6 @@ export const ROUTES_PATHS = [
     title: 'Configuracoes',
     isPrivate: true,
     Permissions: [],
-    icon: faChartLine,
+    icon: faScrewdriverWrench,
   },
 ];
