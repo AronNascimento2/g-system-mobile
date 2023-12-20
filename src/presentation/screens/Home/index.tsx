@@ -4,20 +4,16 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const {signOut, authData} = useAuth();
+  const {authData} = useAuth();
 
   const handleIconPress = path => {
     navigation.navigate(path);
   };
 
-  const handleLogout = () => {
-    signOut();
-  };
   const filteredRoutes = ROUTES_PATHS.filter(route => route.title !== 'Home');
 
   const renderIcons = () => {
@@ -44,20 +40,12 @@ const HomeScreen = () => {
               style={styles.icon}
             />
           </TouchableOpacity>
-          <Text style={styles.text}>{route?.title}</Text>
+          <Text style={[styles.text, disabled ? styles.disabledText : null]}>
+            {route?.title}
+          </Text>
         </View>
       );
     });
-
-    // Adicionando o botão "Sair"
-    icons.push(
-      <View key="logout" style={styles.iconTextContainer}>
-        <TouchableOpacity style={styles.iconContainer} onPress={handleLogout}>
-          <FontAwesomeIcon size={25} icon={faSignOutAlt} style={styles.icon} />
-        </TouchableOpacity>
-        <Text style={styles.text}>Sair</Text>
-      </View>,
-    );
 
     return icons;
   };
@@ -111,6 +99,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     color: '#999', // Cor do texto para botão desabilitado
   },
+  disabledText: {
+    color: '#999', // Cor do texto para botão desabilitado
+  },
   text: {
     fontSize: 16,
     color: '#3498db',
@@ -123,7 +114,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerLogo: {
-    elevation: 2,
     height: 150,
     width: '100%',
     paddingTop: 10,
@@ -134,7 +124,7 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingRight: 10,
 
-    paddingTop: 40,
+    paddingTop: 50,
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
