@@ -30,43 +30,6 @@ const StackNavigator = () => (
 );
 
 export const AppStack = () => {
-  const navigation = useNavigationState(state => state);
-  const [tokenExpired, setTokenExpired] = useState(false);
-
-  useEffect(() => {
-    const checkTokenExpiration = async () => {
-      try {
-        const {token, expiration} = await getTokenAndExpiration();
-
-        if (token && expiration) {
-          const expirationDate = new Date(expiration).getTime();
-          const currentDate = new Date().getTime();
-
-          if (currentDate > expirationDate) {
-            await AsyncStorage.removeItem('@AuthData');
-            setTokenExpired(true);
-          }
-        }
-      } catch (error) {
-        console.log('Erro ao verificar expiração do token:', error);
-      }
-    };
-
-    checkTokenExpiration();
-  }, [navigation]);
-
-  if (tokenExpired) {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    );
-  }
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -74,7 +37,7 @@ export const AppStack = () => {
         tabBarInactiveTintColor: 'gray', // Color for inactive tab
       }}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={StackNavigator}
         options={{
           tabBarLabel: '',
