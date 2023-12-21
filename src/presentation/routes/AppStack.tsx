@@ -1,15 +1,11 @@
 // AppStack.js
 
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES_PATHS} from '../constants/routesPaths';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigationState} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome, faSignOut} from '@fortawesome/free-solid-svg-icons';
-import {getTokenAndExpiration} from '../helpers/getAsyncStorage';
-import {LoginScreen} from '../screens';
 import {LogoutScreen} from './handleLogout';
 import {Text, View, StyleSheet} from 'react-native';
 

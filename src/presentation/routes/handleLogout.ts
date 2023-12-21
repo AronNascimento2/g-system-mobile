@@ -1,5 +1,3 @@
-// LogoutScreen.js
-
 import {useEffect} from 'react';
 import {useAuth} from '../contexts/AuthProvider';
 
