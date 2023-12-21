@@ -15,31 +15,40 @@ export function Router() {
   const {authData, signOut, signIn} = useAuth();
   const [appIsReady, setAppIsReady] = useState(false);
 
-  const handleSign = async () => {
-    const storedEmail = await AsyncStorage.getItem('email');
-    const storedCnpj = await AsyncStorage.getItem('cnpj');
-    const storedPassword = await AsyncStorage.getItem('password');
+  const readFromAsyncStorage = async keys => {
+    const result = await AsyncStorage.multiGet(keys);
+    const formattedResult = Object.fromEntries(result);
 
-    if (storedEmail && storedCnpj && storedPassword) {
-      signIn(storedEmail, storedPassword, storedCnpj);
+    if (Object.values(formattedResult).some(value => value === null)) {
+      throw new Error('Null value found in AsyncStorage');
     }
+
+    return formattedResult;
   };
 
-  const authenticateWithBiometrics = useBiometricAuthentication(handleSign);
-  const handleAppStateChange = async (nextAppState: string) => {
-    const biometricEnabledValue = await AsyncStorage.getItem(
-      'biometricEnabled',
-    );
-    const email = await AsyncStorage.getItem('email');
+  const authenticateWithBiometrics = useBiometricAuthentication(async () => {
+    const {email, password, cnpj} = await readFromAsyncStorage([
+      'email',
+      'password',
+      'cnpj',
+    ]);
 
-    const password = await AsyncStorage.getItem('password');
+    if (email && password && cnpj) {
+      signIn(email, password, cnpj);
+    } else {
+      throw new Error('Null value found in email, password, or cnpj');
+    }
+  });
 
-    const cnpj = await AsyncStorage.getItem('cnpj'),
-      handleBiometricAuthentication = () => {
-        authenticateWithBiometrics();
-      };
+  const handleAppStateChange = async nextAppState => {
+    const [biometricEnabledValue, email, password, cnpj] = await Promise.all([
+      AsyncStorage.getItem('biometricEnabled'),
+      AsyncStorage.getItem('email'),
+      AsyncStorage.getItem('password'),
+      AsyncStorage.getItem('cnpj'),
+    ]);
+
     const {expiration} = await getTokenAndExpiration();
-    console.log(nextAppState);
 
     if (nextAppState === 'background') {
       const backgroundTime = Date.now();
@@ -51,19 +60,19 @@ export function Router() {
 
       const currentTime = Date.now();
       const elapsedTime = currentTime - Number(backgroundTimeMillis);
-      const elapsedMinutes = elapsedTime / (1000 * 60);
+      const elapsedMinutes = elapsedTime / (1000 * 5);
 
       const backgroundTimeFormatted =
         convertToFormattedTime(backgroundTimeMillis);
 
       if (
-        elapsedMinutes > 10 ||
+        elapsedMinutes ||
         (expiration && backgroundTimeFormatted > expiration)
       ) {
         signOut();
 
         if (biometricEnabledValue === 'true' && email && password && cnpj) {
-          handleBiometricAuthentication();
+          authenticateWithBiometrics();
         }
       }
     }

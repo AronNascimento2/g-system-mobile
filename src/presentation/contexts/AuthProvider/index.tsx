@@ -35,30 +35,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   }, []);
 
   async function loadStorageData(): Promise<void> {
-    try {
-      const authDataSerialized = await AsyncStorage.getItem('@AuthData');
-      if (authDataSerialized) {
-        const _authData: AuthData = JSON.parse(authDataSerialized);
+    const authDataSerialized = await AsyncStorage.getItem('@AuthData');
 
-        if (tokenExpired(_authData?.JWT?.Expiration)) {
-          signOut();
-          return;
-        }
+    if (authDataSerialized) {
+      const _authData: AuthData = JSON.parse(authDataSerialized);
 
-        setAuthData(_authData);
+      if (tokenExpired(_authData?.JWT?.Expiration)) {
+        signOut();
+        return;
       }
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
+
+      setAuthData(_authData);
     }
+
+    setIsLoading(false);
   }
 
   function tokenExpired(expirationDate: string | undefined): boolean {
-    if (!expirationDate) {
-      return true;
-    }
-
-    const expiration = new Date(expirationDate).getTime();
+    const expiration = new Date(expirationDate ?? '').getTime();
     const current = new Date().getTime();
 
     return current > expiration;
@@ -72,9 +66,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         const _authData: AuthData = response.data;
         setAuthData(_authData);
         AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
-      } else {
-        throw new Error(response.message ?? 'Erro ao autenticar');
+        return;
       }
+
+      throw new Error(response.message ?? 'Erro ao autenticar');
     } catch (error) {
       Alert.alert(error.message, 'Tente novamente');
     }
@@ -88,6 +83,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     () => ({authData, signIn, signOut, isLoading}),
     [authData, isLoading],
   );
+
   return (
     <AuthContext.Provider value={authContextValue}>
       {children}

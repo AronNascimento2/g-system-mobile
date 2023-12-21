@@ -84,14 +84,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     height: '100%',
-    gap: 20,
+    gap: 30,
   },
   iconContainer: {
     elevation: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 90,
-    height: 90,
+    width: 70,
+    height: 70,
     borderRadius: 60,
     backgroundColor: '#3498db',
   },
@@ -120,9 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapper: {
-    paddingRight: 10,
-
-    paddingTop: 30,
+    paddingTop: 60,
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
