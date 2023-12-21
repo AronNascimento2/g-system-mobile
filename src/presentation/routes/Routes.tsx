@@ -12,7 +12,7 @@ import {convertToFormattedTime} from '../utils/convertFomratedTime';
 import {useBiometricAuthentication} from '../contexts/hook';
 
 export function Router() {
-  const {authData, signOut, signIn} = useAuth();
+  const {authData, signOut, signIn, isLoading} = useAuth();
   const [appIsReady, setAppIsReady] = useState(false);
 
   const readFromAsyncStorage = async keys => {
@@ -95,7 +95,7 @@ export function Router() {
     }, 1000);
   }, []);
 
-  if (!appIsReady) {
+  if (!appIsReady || isLoading) {
     return <SplashScreen />;
   }
 

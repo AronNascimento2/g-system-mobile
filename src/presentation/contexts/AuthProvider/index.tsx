@@ -13,6 +13,7 @@ import {
   AuthData,
   AuthResponse,
 } from '../../../services/Authentication';
+import {SplashScreen} from '../../screens/SplashScreen/Splash';
 
 interface AuthContextData {
   authData?: AuthData;
@@ -28,7 +29,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [authData, setAuthData] = useState<AuthData>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadStorageData();
@@ -59,6 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   }
 
   async function signIn(email: string, password: string, cnpj: string) {
+    setIsLoading(true);
     try {
       const response: AuthResponse = await AuthService(email, password, cnpj);
 
@@ -68,10 +70,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
         return;
       }
-
+      setIsLoading(false);
       throw new Error(response.message ?? 'Erro ao autenticar');
     } catch (error) {
       Alert.alert(error.message, 'Tente novamente');
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }
 
