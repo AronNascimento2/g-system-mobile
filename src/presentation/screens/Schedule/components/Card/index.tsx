@@ -22,7 +22,7 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
 
   useEffect(() => {
     // Define os 50 primeiros itens dos agendamentos para exibição inicial
-    setDisplayedAppointments(appointments.slice(0, 10));
+    setDisplayedAppointments(appointments.slice(0, 50));
   }, [appointments]);
 
   const openModal = appointment => {

@@ -25,7 +25,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.container}>
-            <Text style={styles.title}>Detalhes do Compromisso</Text>
+            <Text style={styles.title}>Detalhes do Agendamento</Text>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Cliente:</Text>
               <Text style={styles.info}>{selectedAppointment.Cliente}</Text>
@@ -89,7 +89,17 @@ export const CustomModal: React.FC<CustomModalProps> = ({
                 {selectedAppointment.Ordem ?? 'N/A'}
               </Text>
             </View>
-
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Veículos :</Text>
+              {selectedAppointment?.Veiculos.map((veiculo, index) => (
+                <View key={index}>
+                  <Text style={styles.info}>
+                    [ Código do Veículo: {veiculo.CodigoVeiculo}, Status:
+                    {veiculo.Status}, Veiculo: {veiculo.Veiculo} ]
+                  </Text>
+                </View>
+              ))}
+            </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Verificado:</Text>
               <Text style={styles.info}>
