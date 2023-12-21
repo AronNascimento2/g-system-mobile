@@ -8,9 +8,12 @@ export const LogoutModal = () => {
   const [showModal, setShowModal] = useState(false);
   const {signOut} = useAuth();
 
-  const handleLogout = () => {
-    signOut();
-    setShowModal(false);
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
   };
 
   return (

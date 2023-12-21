@@ -6,7 +6,7 @@ export const getTokenAndExpiration = async () => {
     const data = JSON.parse(dataStorage ?? '{}');
 
     const token = data.JWT?.Token || null;
-    const expiration = data.JWT?.expiration || null;
+    const expiration = data.JWT?.Expiration || null;
 
     return {token, expiration};
   } catch (error) {

@@ -7,20 +7,65 @@ import {useAuth} from '../contexts/AuthProvider';
 import {SplashScreen} from '../screens/SplashScreen/Splash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TokenValidityChecker} from '../contexts/TokenValidity';
+import {getTokenAndExpiration} from '../helpers/getAsyncStorage';
+import {convertToFormattedTime} from '../utils/convertFomratedTime';
+import {useBiometricAuthentication} from '../contexts/hook';
 
 export function Router() {
-  const {authData} = useAuth();
+  const {authData, signOut, signIn} = useAuth();
   const [appIsReady, setAppIsReady] = useState(false);
 
-  // Esta função é chamada quando o estado do aplicativo muda
-  const handleAppStateChange = nextAppState => {
-    console.log('AppState mudou para:', nextAppState);
+  const handleSign = async () => {
+    const storedEmail = await AsyncStorage.getItem('email');
+    const storedCnpj = await AsyncStorage.getItem('cnpj');
+    const storedPassword = await AsyncStorage.getItem('password');
 
-    // Verifique se o estado atual é 'background' (em segundo plano)
+    if (storedEmail && storedCnpj && storedPassword) {
+      signIn(storedEmail, storedPassword, storedCnpj);
+    }
+  };
+
+  const authenticateWithBiometrics = useBiometricAuthentication(handleSign);
+  const handleAppStateChange = async nextAppState => {
+    const biometricEnabledValue = await AsyncStorage.getItem(
+      'biometricEnabled',
+    );
+    const email = await AsyncStorage.getItem('email');
+
+    const password = await AsyncStorage.getItem('password');
+
+    const cnpj = await AsyncStorage.getItem('cnpj'),
+      handleBiometricAuthentication = () => {
+        authenticateWithBiometrics(); // Chama a função de autenticação
+      };
+    const {expiration} = await getTokenAndExpiration();
+    console.log(nextAppState);
+
     if (nextAppState === 'background') {
-      // Faça o que for necessário quando o aplicativo estiver inativo
-      // Por exemplo, limpar os dados sensíveis, salvar o estado atual, etc.
-      AsyncStorage.removeItem('@AuthData');
+      const backgroundTime = Date.now();
+      await AsyncStorage.setItem('@BackgroundTime', backgroundTime.toString());
+    } else if (nextAppState === 'active') {
+      const backgroundTimeMillis = await AsyncStorage.getItem(
+        '@BackgroundTime',
+      );
+
+      const currentTime = Date.now();
+      const elapsedTime = currentTime - Number(backgroundTimeMillis);
+      const elapsedMinutes = elapsedTime / (1000 * 60); // Convertendo milissegundos para minutos
+
+      const backgroundTimeFormatted =
+        convertToFormattedTime(backgroundTimeMillis);
+
+      if (
+        elapsedMinutes > 10 ||
+        (expiration && backgroundTimeFormatted > expiration)
+      ) {
+        signOut();
+
+        if (biometricEnabledValue === 'true' && email && password && cnpj) {
+          handleBiometricAuthentication();
+        }
+      }
     }
   };
 
@@ -38,13 +83,13 @@ export function Router() {
   useEffect(() => {
     setTimeout(() => {
       setAppIsReady(true);
-    }, 2000);
+    }, 1000);
   }, []);
 
-  // Renderiza a tela de splash enquanto o aplicativo está carregando
   if (!appIsReady) {
     return <SplashScreen />;
   }
+
   return (
     <NavigationContainer>
       <TokenValidityChecker />

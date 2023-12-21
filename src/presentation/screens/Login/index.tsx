@@ -14,6 +14,7 @@ import {TextInputMask} from 'react-native-masked-text';
 import {SplashScreen} from '../SplashScreen/Splash';
 import TouchID from 'react-native-touch-id';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useBiometricAuthentication} from '../../contexts/hook';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -167,38 +168,18 @@ export const LoginScreen = () => {
     }
   }, [biometricEnabled]);
 
-  const optionalConfigObject = {
-    borderRadius: 40, // Adicionando border radius
-    backGroundColor: 'blue', // Mudando a cor de fundo
-    title: 'Acesso com digital', // Android
-    imageColor: '#3498db', // Android
-    imageErrorColor: '#ff0000',
-    errorMessage: 'Erro de autenticação', // Alteração da mensagem de erro
-    sensorDescription: 'Posicione o dedo no leitor biométrico do seu celular', // Android
-    sensorErrorDescription: 'Autenticação falhou tente novamente', // Android
-    cancelText: 'Cancelar', // Android
-    fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
-    unifiedErrors: false, // use unified error messages (default false)
-    passcodeFallback: false, // iOS
-  };
+  const authenticateWithBiometrics = useBiometricAuthentication(handleSignIn);
 
-  const handleAuth = () => {
-    TouchID.isSupported().then(biometryType => {
-      TouchID.authenticate('', optionalConfigObject)
-        .then(() => {
-          handleSignIn();
-        })
-        .catch(error => {
-          console.log('Authentication Failed', error.message);
-        });
-    });
+  const handleBiometricAuthentication = () => {
+    authenticateWithBiometrics(); // Chama a função de autenticação
   };
-
   const handleInputChange = (text, setter, key) => {
     setter(text);
     saveToStorage(key, text);
   };
-
+  if (loading) {
+    return <SplashScreen />;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -211,7 +192,9 @@ export const LoginScreen = () => {
         </View>
         <>
           {biometricEnabled && isBiometricStored && !loadingToggle ? (
-            <TouchableOpacity style={styles.button} onPress={handleAuth}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleBiometricAuthentication}>
               <Text style={styles.buttonText}>Acessar com Biometria</Text>
             </TouchableOpacity>
           ) : (

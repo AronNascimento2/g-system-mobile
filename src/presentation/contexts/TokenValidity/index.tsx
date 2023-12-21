@@ -4,7 +4,6 @@ import {useAuth} from '../AuthProvider';
 
 export const TokenValidityChecker = () => {
   const {authData, signOut} = useAuth();
-  console.log(authData?.JWT.Expiration);
 
   useFocusEffect(
     React.useCallback(() => {
