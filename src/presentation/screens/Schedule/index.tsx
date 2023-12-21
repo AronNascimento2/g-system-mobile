@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {getFirstAndLastDayOfMonth} from '../../utils/getFirstAndLastDayOfMonth';
 import {fetchAppointments, AppointmentType} from '../../../services/Schedule';
-import {AppointmentCard} from './components';
+import {AppointmentCard} from './components/Card';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {CustomModal} from '../../components/Modal';

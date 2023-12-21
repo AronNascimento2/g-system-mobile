@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {AppointmentType} from '../../../../services/Schedule';
+import {AppointmentType} from '../../../../../services/Schedule';
 
 interface AppointmentCardProps {
   appointment: AppointmentType;
@@ -41,7 +41,12 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
           </View>
           <View style={styles.appointmentInfo}>
             <Text style={styles.title}>Endereço:</Text>
-            <Text style={styles.info}>{appointment.Endereco}</Text>
+            <Text
+              style={[styles.info, styles.address]}
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {appointment.Endereco}
+            </Text>
           </View>
         </View>
       </View>
@@ -50,6 +55,9 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
 };
 
 const styles = StyleSheet.create({
+  address: {
+    flex: 1,
+  },
   nameCodeContainer: {
     flexDirection: 'row',
     display: 'flex',
