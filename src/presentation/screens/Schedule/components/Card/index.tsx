@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, TouchableHighlight} from 'react-native';
 import {AppointmentType} from '../../../../../services/Schedule';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {CustomModal} from '../../../../components/Modal';
@@ -40,11 +40,10 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
           appointment.Cliente.toLowerCase().includes(searchText.toLowerCase()),
         )
         .map(appointment => (
-          <TouchableOpacity
+          <TouchableHighlight
             key={appointment.Codigo}
             onPress={() => openModal(appointment)}
-            activeOpacity={0.5} // Set opacity on press for visual feedback
-          >
+            underlayColor="#ccc">
             <View style={styles.cardContainer}>
               <View style={styles.nameContainer}>
                 <Text style={styles.clientName}>{appointment.Cliente}</Text>
@@ -86,7 +85,7 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
                 </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
         ))}
       {selectedAppointment !== null && (
         <CustomModal
