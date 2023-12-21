@@ -19,7 +19,7 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
-  const {signIn, authData} = useAuth();
+  const {signIn} = useAuth();
   const [loading, setLoading] = useState(false);
   const [biometricEnabled, setBiometricEnabled] = useState(false);
   const [isBiometricStored, setIsBiometricStored] = useState(false);
@@ -168,24 +168,28 @@ export const LoginScreen = () => {
   }, [biometricEnabled]);
 
   const optionalConfigObject = {
-    title: 'Please Authenticate', // Android
-    imageColor: '#000', // Android
-    imageErrorColor: '#ff0000', // Android
-    sensorDescription: 'Slightly Touch sensor', // Android
-    sensorErrorDescription: 'Failed', // Android
-    cancelText: 'Cancel', // Android
+    borderRadius: 40, // Adicionando border radius
+    backGroundColor: 'blue', // Mudando a cor de fundo
+    title: 'Acesso com digital', // Android
+    imageColor: '#3498db', // Android
+    imageErrorColor: '#ff0000',
+    errorMessage: 'Erro de autenticação', // Alteração da mensagem de erro
+    sensorDescription: 'Posicione o dedo no leitor biométrico do seu celular', // Android
+    sensorErrorDescription: 'Autenticação falhou tente novamente', // Android
+    cancelText: 'Cancelar', // Android
     fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
     unifiedErrors: false, // use unified error messages (default false)
     passcodeFallback: false, // iOS
   };
+
   const handleAuth = () => {
     TouchID.isSupported().then(biometryType => {
       TouchID.authenticate('', optionalConfigObject)
-        .then(success => {
+        .then(() => {
           handleSignIn();
         })
         .catch(error => {
-          Alert.alert('Authentication Failed', error.message);
+          console.log('Authentication Failed', error.message);
         });
     });
   };
@@ -212,7 +216,7 @@ export const LoginScreen = () => {
         <>
           {biometricEnabled && isBiometricStored && !loadingToggle ? (
             <TouchableOpacity style={styles.button} onPress={handleAuth}>
-              <Text style={styles.buttonText}>Biometria</Text>
+              <Text style={styles.buttonText}>Acessar com Biometria</Text>
             </TouchableOpacity>
           ) : (
             <>
