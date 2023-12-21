@@ -60,13 +60,13 @@ export function Router() {
 
       const currentTime = Date.now();
       const elapsedTime = currentTime - Number(backgroundTimeMillis);
-      const elapsedMinutes = elapsedTime / (1000 * 5);
+      const elapsedMinutes = elapsedTime / (1000 * 60);
 
       const backgroundTimeFormatted =
         convertToFormattedTime(backgroundTimeMillis);
 
       if (
-        elapsedMinutes ||
+        elapsedMinutes > 10 ||
         (expiration && backgroundTimeFormatted > expiration)
       ) {
         signOut();
