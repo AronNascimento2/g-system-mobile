@@ -14,6 +14,7 @@ import {TextInputMask} from 'react-native-masked-text';
 import {SplashScreen} from '../SplashScreen/Splash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useBiometricAuthentication} from '../../contexts/hook';
+import TouchID from 'react-native-touch-id';
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -24,6 +25,13 @@ export const LoginScreen = () => {
   const [biometricEnabled, setBiometricEnabled] = useState(false);
   const [isBiometricStored, setIsBiometricStored] = useState(false);
   const [loadingToggle, setLoadingToggle] = useState(false);
+  const [touchIDEnabled, setTouchIDEnabled] = useState(false);
+
+  useEffect(() => {
+    TouchID.isSupported()
+      .then(() => setTouchIDEnabled(true))
+      .catch(() => setTouchIDEnabled(false));
+  }, []);
 
   const checkBiometricStored = async () => {
     try {
@@ -251,18 +259,19 @@ export const LoginScreen = () => {
             </>
           )}
         </>
-
-        <View style={styles.wrapperBiometricToggle}>
-          <Text style={{color: 'black'}}>Ativar login por biometria</Text>
-          <Switch
-            disabled={loadingToggle}
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={biometricEnabled ? '#3498db' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={newValue => toggleBiometricLogin(newValue)}
-            value={biometricEnabled}
-          />
-        </View>
+        {touchIDEnabled && (
+          <View style={styles.wrapperBiometricToggle}>
+            <Text style={{color: 'black'}}>Ativar login por biometria</Text>
+            <Switch
+              disabled={loadingToggle}
+              trackColor={{false: '#767577', true: '#81b0ff'}}
+              thumbColor={biometricEnabled ? '#3498db' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={newValue => toggleBiometricLogin(newValue)}
+              value={biometricEnabled}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
