@@ -12,7 +12,6 @@ import {
 import {useAuth} from '../../contexts/AuthProvider';
 import {TextInputMask} from 'react-native-masked-text';
 import {SplashScreen} from '../SplashScreen/Splash';
-import TouchID from 'react-native-touch-id';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useBiometricAuthentication} from '../../contexts/hook';
 
@@ -51,7 +50,9 @@ export const LoginScreen = () => {
     checkBiometricStored();
   }, []);
 
-  const toggleBiometricLogin = async newValue => {
+  const toggleBiometricLogin = async (newValue: boolean) => {
+    // seu código aqui
+
     try {
       setLoadingToggle(true);
 
@@ -85,7 +86,10 @@ export const LoginScreen = () => {
   };
 
   useEffect(() => {
-    const getStoredData = async (key, setter) => {
+    const getStoredData = async (
+      key: string,
+      setter: React.Dispatch<React.SetStateAction<string>>,
+    ) => {
       try {
         const storedValue = await AsyncStorage.getItem(key);
         if (storedValue !== null) {
@@ -118,7 +122,7 @@ export const LoginScreen = () => {
     getBiometricSetting();
   }, []);
 
-  const saveToStorage = async (key, value) => {
+  const saveToStorage = async (key: string, value: string) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (error) {
@@ -164,7 +168,11 @@ export const LoginScreen = () => {
   const handleBiometricAuthentication = () => {
     authenticateWithBiometrics();
   };
-  const handleInputChange = (text, setter, key) => {
+  const handleInputChange = (
+    text: string,
+    setter: React.Dispatch<React.SetStateAction<string>>,
+    key: string,
+  ) => {
     setter(text);
     saveToStorage(key, text);
   };

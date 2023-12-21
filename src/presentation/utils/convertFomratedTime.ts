@@ -1,4 +1,4 @@
-export const convertToFormattedTime = backgroundTimeMillis => {
+export const convertToFormattedTime = (backgroundTimeMillis: string) => {
   const backgroundTime = new Date(parseInt(backgroundTimeMillis, 10));
   backgroundTime.setHours(backgroundTime.getHours() - 3);
 

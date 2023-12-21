@@ -1,6 +1,10 @@
 import TouchID from 'react-native-touch-id';
 
-export const useBiometricAuthentication = handleSignIn => {
+type HandleSignInFunction = () => void;
+
+export const useBiometricAuthentication = (
+  handleSignIn: HandleSignInFunction,
+) => {
   const optionalConfigObject = {
     title: 'Acesso com digital', // Android
     imageColor: '#3498db', // Android

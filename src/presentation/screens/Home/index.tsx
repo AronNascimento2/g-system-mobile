@@ -5,13 +5,12 @@ import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {LogoutS} from '../logout';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {authData} = useAuth();
 
-  const handleIconPress = path => {
+  const handleIconPress = (path: string) => {
     navigation.navigate(path);
   };
 

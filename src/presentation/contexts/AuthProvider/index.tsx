@@ -1,4 +1,10 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Alert} from 'react-native';
@@ -14,10 +20,13 @@ interface AuthContextData {
   signOut: () => Promise<void>;
   isLoading: boolean;
 }
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export const AuthProvider: React.FC = ({children}) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [authData, setAuthData] = useState<AuthData>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,7 +73,7 @@ export const AuthProvider: React.FC = ({children}) => {
         setAuthData(_authData);
         AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
       } else {
-        throw new Error(response.message || 'Erro ao autenticar');
+        throw new Error(response.message ?? 'Erro ao autenticar');
       }
     } catch (error) {
       Alert.alert(error.message, 'Tente novamente');
@@ -75,9 +84,12 @@ export const AuthProvider: React.FC = ({children}) => {
     setAuthData(undefined);
     await AsyncStorage.removeItem('@AuthData');
   }
-
+  const authContextValue = React.useMemo(
+    () => ({authData, signIn, signOut, isLoading}),
+    [authData, isLoading],
+  );
   return (
-    <AuthContext.Provider value={{authData, signIn, signOut, isLoading}}>
+    <AuthContext.Provider value={authContextValue}>
       {children}
     </AuthContext.Provider>
   );

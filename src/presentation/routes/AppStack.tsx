@@ -5,7 +5,7 @@ import {ROUTES_PATHS} from '../constants/routesPaths';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {LogoutModal} from '../screens/Logout';
 
 const Tab = createBottomTabNavigator();

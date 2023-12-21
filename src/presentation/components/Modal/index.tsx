@@ -1,7 +1,18 @@
 import React from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {AppointmentType} from '../../../services/Schedule';
 
-export const CustomModal = ({visible, closeModal, appointment}) => {
+interface CustomModalProps {
+  visible: boolean;
+  closeModal: () => void;
+  appointment: AppointmentType;
+}
+
+export const CustomModal: React.FC<CustomModalProps> = ({
+  visible,
+  closeModal,
+  appointment,
+}) => {
   if (!visible) {
     return null;
   }
@@ -30,17 +41,17 @@ export const CustomModal = ({visible, closeModal, appointment}) => {
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Técnico:</Text>
-              <Text style={styles.info}>{appointment.Tecnico || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Tecnico ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Data de Criação:</Text>
               <Text style={styles.info}>
-                {appointment.DataCriacao || 'N/A'}
+                {appointment.DataCriacao ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Observação:</Text>
-              <Text style={styles.info}>{appointment.Observacao || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Observacao ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Não Presencial:</Text>
@@ -51,27 +62,27 @@ export const CustomModal = ({visible, closeModal, appointment}) => {
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Status de Faturamento:</Text>
               <Text style={styles.info}>
-                {appointment.StatusFaturamento || 'N/A'}
+                {appointment.StatusFaturamento ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Veículo Status:</Text>
               <Text style={styles.info}>
-                {appointment.Veiculos?.Status || 'N/A'}
+                {appointment.Veiculos?.Status ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Km:</Text>
-              <Text style={styles.info}>{appointment.Km || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Km ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Ordem:</Text>
-              <Text style={styles.info}>{appointment.Ordem || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Ordem ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Valor do Serviço:</Text>
               <Text style={styles.info}>
-                {appointment.ValorServico || 'N/A'}
+                {appointment.ValorServico ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
@@ -89,18 +100,18 @@ export const CustomModal = ({visible, closeModal, appointment}) => {
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Cliente Antigo:</Text>
               <Text style={styles.info}>
-                {appointment.ClienteAntigo || 'N/A'}
+                {appointment.ClienteAntigo ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Custo de Deslocamento:</Text>
               <Text style={styles.info}>
-                {appointment.CustoDeslocamento || 'N/A'}
+                {appointment.CustoDeslocamento ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Serviço:</Text>
-              <Text style={styles.info}>{appointment.Servico || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Servico ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Endereço:</Text>
@@ -108,20 +119,20 @@ export const CustomModal = ({visible, closeModal, appointment}) => {
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Tipo:</Text>
-              <Text style={styles.info}>{appointment.Tipo || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Tipo ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Custos:</Text>
-              <Text style={styles.info}> {appointment.Custos || 'N/A'}</Text>
+              <Text style={styles.info}> {appointment.Custos ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Período:</Text>
-              <Text style={styles.info}>{appointment.Periodo || 'N/A'}</Text>
+              <Text style={styles.info}>{appointment.Periodo ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Valor Adicional:</Text>
               <Text style={styles.info}>
-                {appointment.ValorAdicional || 'N/A'}
+                {appointment.ValorAdicional ?? 'N/A'}
               </Text>
             </View>
           </View>

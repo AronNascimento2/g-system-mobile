@@ -8,7 +8,7 @@ export const TokenValidityChecker = () => {
   useFocusEffect(
     React.useCallback(() => {
       const checkTokenValidity = async () => {
-        if (authData && authData.JWT && authData.JWT.Expiration) {
+        if (authData?.JWT?.Token && authData?.JWT?.Expiration) {
           const expiration = new Date(authData.JWT.Expiration).getTime();
           const current = new Date().getTime();
           if (current > expiration) {

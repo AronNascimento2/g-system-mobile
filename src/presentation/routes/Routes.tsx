@@ -26,7 +26,7 @@ export function Router() {
   };
 
   const authenticateWithBiometrics = useBiometricAuthentication(handleSign);
-  const handleAppStateChange = async nextAppState => {
+  const handleAppStateChange = async (nextAppState: string) => {
     const biometricEnabledValue = await AsyncStorage.getItem(
       'biometricEnabled',
     );
