@@ -5,17 +5,16 @@ import {AppointmentType} from '../../../services/Schedule';
 interface CustomModalProps {
   visible: boolean;
   closeModal: () => void;
-  appointment: AppointmentType;
+  selectedAppointment: AppointmentType;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
   visible,
   closeModal,
-  appointment,
+  selectedAppointment,
 }) => {
-  if (!visible) {
-    return null;
-  }
+  console.log('visivel', visible);
+  console.log(selectedAppointment);
 
   return (
     <Modal
@@ -28,111 +27,130 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           <View style={styles.container}>
             <Text style={styles.title}>Detalhes do Compromisso</Text>
             <View style={styles.itemContainer}>
-              <Text style={styles.label}>Data:</Text>
-              <Text style={styles.info}>{appointment.Data}</Text>
-            </View>
-            <View style={styles.itemContainer}>
               <Text style={styles.label}>Cliente:</Text>
-              <Text style={styles.info}>{appointment.Cliente}</Text>
+              <Text style={styles.info}>{selectedAppointment.Cliente}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Código:</Text>
-              <Text style={styles.info}>{appointment.Codigo}</Text>
+              <Text style={styles.info}>{selectedAppointment.Codigo}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Técnico:</Text>
-              <Text style={styles.info}>{appointment.Tecnico ?? 'N/A'}</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Tecnico ?? 'N/A'}
+              </Text>
+            </View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Data:</Text>
+              <Text style={styles.info}>{selectedAppointment.Data}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Data de Criação:</Text>
               <Text style={styles.info}>
-                {appointment.DataCriacao ?? 'N/A'}
+                {selectedAppointment.DataCriacao ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
-              <Text style={styles.label}>Observação:</Text>
-              <Text style={styles.info}>{appointment.Observacao ?? 'N/A'}</Text>
+              <Text style={styles.label}>Endereço:</Text>
+              <Text style={styles.info}>{selectedAppointment.Endereco}</Text>
             </View>
             <View style={styles.itemContainer}>
-              <Text style={styles.label}>Não Presencial:</Text>
+              <Text style={styles.label}>Período:</Text>
               <Text style={styles.info}>
-                {appointment.NãoPresencial ? 'Sim' : 'Não'}
+                {selectedAppointment.Periodo ?? 'N/A'}
               </Text>
-            </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Status de Faturamento:</Text>
-              <Text style={styles.info}>
-                {appointment.StatusFaturamento ?? 'N/A'}
-              </Text>
-            </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Veículo Status:</Text>
-              <Text style={styles.info}>
-                {appointment.Veiculos?.Status ?? 'N/A'}
-              </Text>
-            </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Km:</Text>
-              <Text style={styles.info}>{appointment.Km ?? 'N/A'}</Text>
-            </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Ordem:</Text>
-              <Text style={styles.info}>{appointment.Ordem ?? 'N/A'}</Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Valor do Serviço:</Text>
               <Text style={styles.info}>
-                {appointment.ValorServico ?? 'N/A'}
+                {selectedAppointment.ValorServico ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
+              <Text style={styles.label}>Não Presencial:</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.NãoPresencial ? 'Sim' : 'Não'}
+              </Text>
+            </View>
+
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Veículo Status:</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Veiculos?.Status ?? 'N/A'}
+              </Text>
+            </View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Km:</Text>
+              <Text style={styles.info}>{selectedAppointment.Km ?? 'N/A'}</Text>
+            </View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Ordem:</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Ordem ?? 'N/A'}
+              </Text>
+            </View>
+
+            <View style={styles.itemContainer}>
               <Text style={styles.label}>Verificado:</Text>
               <Text style={styles.info}>
-                {appointment.Verificado ? 'Sim' : 'Não'}
+                {selectedAppointment.Verificado ? 'Sim' : 'Não'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Visita Técnica:</Text>
               <Text style={styles.info}>
-                {appointment.VisitaTecnica ? 'Sim' : 'Não'}
+                {selectedAppointment.VisitaTecnica ? 'Sim' : 'Não'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Cliente Antigo:</Text>
               <Text style={styles.info}>
-                {appointment.ClienteAntigo ?? 'N/A'}
+                {selectedAppointment.ClienteAntigo ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Custo de Deslocamento:</Text>
               <Text style={styles.info}>
-                {appointment.CustoDeslocamento ?? 'N/A'}
+                {selectedAppointment.CustoDeslocamento ?? 'N/A'}
               </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Serviço:</Text>
-              <Text style={styles.info}>{appointment.Servico ?? 'N/A'}</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Servico ?? 'N/A'}
+              </Text>
             </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Endereço:</Text>
-              <Text style={styles.info}>{appointment.Endereco}</Text>
-            </View>
+
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Tipo:</Text>
-              <Text style={styles.info}>{appointment.Tipo ?? 'N/A'}</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Tipo ?? 'N/A'}
+              </Text>
             </View>
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Custos:</Text>
-              <Text style={styles.info}> {appointment.Custos ?? 'N/A'}</Text>
+              <Text style={styles.info}>
+                {' '}
+                {selectedAppointment.Custos ?? 'N/A'}
+              </Text>
             </View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.label}>Período:</Text>
-              <Text style={styles.info}>{appointment.Periodo ?? 'N/A'}</Text>
-            </View>
+
             <View style={styles.itemContainer}>
               <Text style={styles.label}>Valor Adicional:</Text>
               <Text style={styles.info}>
-                {appointment.ValorAdicional ?? 'N/A'}
+                {selectedAppointment.ValorAdicional ?? 'N/A'}
+              </Text>
+            </View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Status de Faturamento:</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.StatusFaturamento ?? 'N/A'}
+              </Text>
+            </View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.label}>Observação:</Text>
+              <Text style={styles.info}>
+                {selectedAppointment.Observacao ?? 'N/A'}
               </Text>
             </View>
           </View>
@@ -148,11 +166,12 @@ export const CustomModal: React.FC<CustomModalProps> = ({
 const styles = StyleSheet.create({
   info: {
     color: 'black',
+    width: '80%',
   },
   container: {
-    padding: 20,
     borderRadius: 5,
     marginBottom: 10,
+    width: '70%',
   },
   title: {
     fontSize: 18,

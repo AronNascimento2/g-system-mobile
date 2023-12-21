@@ -14,7 +14,6 @@ import {fetchAppointments, AppointmentType} from '../../../services/Schedule';
 import {AppointmentCard} from './components/Card';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
-import {CustomModal} from '../../components/Modal';
 
 export const ScheduleScreen: React.FC = () => {
   const [appointments, setAppointments] = useState<AppointmentType[]>([]);
@@ -22,18 +21,6 @@ export const ScheduleScreen: React.FC = () => {
   const {firstDay, lastDay} = getFirstAndLastDayOfMonth();
   const [searchText, setSearchText] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] =
-    useState<AppointmentType | null>(null);
-
-  const handleCardClick = (appointment: AppointmentType) => {
-    setSelectedAppointment(appointment);
-    setModalVisible(true);
-  };
-
-  const handleSearch = (text: string) => {
-    setSearchText(text);
-  };
 
   const fetchData = async () => {
     const startDate = firstDay;
@@ -49,6 +36,7 @@ export const ScheduleScreen: React.FC = () => {
       setRefreshing(false);
     }
   };
+
   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
@@ -57,14 +45,18 @@ export const ScheduleScreen: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const filteredAppointments = appointments.filter(appointment =>
-    appointment.Cliente.toLowerCase().includes(searchText.toLowerCase()),
-  );
   const handleClearText = () => {
     setSearchText('');
   };
 
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+  };
+
+  const handleRowClickCard = rowData => {
+    const details = rowData;
+    return details;
+  };
   return (
     <>
       <View>
@@ -104,22 +96,15 @@ export const ScheduleScreen: React.FC = () => {
                 <Text style={{color: '#3498db'}}>Carregando...</Text>
               </View>
             ) : (
-              filteredAppointments.map((appointment: AppointmentType) => (
-                <TouchableOpacity
-                  key={appointment.Codigo}
-                  onPress={() => handleCardClick(appointment)}>
-                  <AppointmentCard appointment={appointment} />
-                </TouchableOpacity>
-              ))
+              <AppointmentCard
+                searchText={searchText}
+                appointments={appointments}
+                handleRowClickCard={handleRowClickCard}
+              />
             )}
           </View>
         </View>
       </ScrollView>
-      <CustomModal
-        visible={modalVisible}
-        appointment={selectedAppointment}
-        closeModal={() => setModalVisible(false)}
-      />
     </>
   );
 };

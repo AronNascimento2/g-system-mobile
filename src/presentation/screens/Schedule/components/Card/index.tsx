@@ -1,56 +1,101 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {AppointmentType} from '../../../../../services/Schedule';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {CustomModal} from '../../../../components/Modal';
 
 interface AppointmentCardProps {
-  appointment: AppointmentType;
+  appointments: AppointmentType;
+  handleRowClickCard: () => void;
+  searchText: string;
 }
 
 export const AppointmentCard: React.FC<AppointmentCardProps> = ({
-  appointment,
+  appointments,
+  searchText,
+  handleRowClickCard,
 }) => {
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [displayedAppointments, setDisplayedAppointments] = useState<
+    AppointmentType[]
+  >([]);
+
+  useEffect(() => {
+    // Define os 50 primeiros itens dos agendamentos para exibição inicial
+    setDisplayedAppointments(appointments.slice(0, 10));
+  }, [appointments]);
+
+  const openModal = appointment => {
+    setSelectedAppointment(appointment);
+    handleRowClickCard(appointment);
+  };
+
+  const closeAndClearModal = () => {
+    setSelectedAppointment(null);
+  };
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.nameContainer}>
-        <Text style={styles.clientName}>{appointment.Cliente}</Text>
-        <Text style={styles.codigo}>{appointment.Codigo}</Text>
-      </View>
-      <View style={styles.containerInfos}>
-        <View style={styles.appointment}>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Serviço:</Text>
-            <Text style={styles.info}>{appointment.Servico}</Text>
-          </View>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Data:</Text>
-            <Text style={styles.info}>{appointment.Data}</Text>
-          </View>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Período:</Text>
-            <Text style={styles.info}>{appointment.Periodo}</Text>
-          </View>
-        </View>
-        <View style={styles.appointment}>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Técnico:</Text>
-            <Text style={styles.info}>{appointment.Tecnico}</Text>
-          </View>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Ordem:</Text>
-            <Text style={styles.info}>{appointment.Ordem}</Text>
-          </View>
-          <View style={styles.appointmentInfo}>
-            <Text style={styles.title}>Endereço:</Text>
-            <Text
-              style={[styles.info, styles.address]}
-              numberOfLines={2}
-              ellipsizeMode="tail">
-              {appointment.Endereco}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+    <>
+      {displayedAppointments
+        ?.filter(appointment =>
+          appointment.Cliente.toLowerCase().includes(searchText.toLowerCase()),
+        )
+        .map(appointment => (
+          <TouchableOpacity
+            key={appointment.Codigo}
+            onPress={() => openModal(appointment)}
+            activeOpacity={0.5} // Set opacity on press for visual feedback
+          >
+            <View style={styles.cardContainer}>
+              <View style={styles.nameContainer}>
+                <Text style={styles.clientName}>{appointment.Cliente}</Text>
+                <Text style={styles.codigo}>{appointment.Codigo}</Text>
+              </View>
+              <View style={styles.containerInfos}>
+                <View style={styles.appointment}>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Serviço:</Text>
+                    <Text style={styles.info}>{appointment.Servico}</Text>
+                  </View>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Data:</Text>
+                    <Text style={styles.info}>{appointment.Data}</Text>
+                  </View>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Período:</Text>
+                    <Text style={styles.info}>{appointment.Periodo}</Text>
+                  </View>
+                </View>
+                <View style={styles.appointment}>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Técnico:</Text>
+                    <Text style={styles.info}>{appointment.Tecnico}</Text>
+                  </View>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Ordem:</Text>
+                    <Text style={styles.info}>{appointment.Ordem}</Text>
+                  </View>
+                  <View style={styles.appointmentInfo}>
+                    <Text style={styles.title}>Endereço:</Text>
+                    <Text
+                      style={[styles.info, styles.address]}
+                      numberOfLines={2}
+                      ellipsizeMode="tail">
+                      {appointment.Endereco}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      {selectedAppointment !== null && (
+        <CustomModal
+          selectedAppointment={selectedAppointment}
+          visible={selectedAppointment !== null} // Alteração aqui
+          closeModal={closeAndClearModal}
+        />
+      )}
+    </>
   );
 };
 
@@ -91,8 +136,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     marginBottom: 5,
-    elevation: 50,
+    elevation: 5,
   },
+
   clientName: {
     fontSize: 18,
     fontWeight: 'bold',
