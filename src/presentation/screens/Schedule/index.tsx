@@ -46,12 +46,12 @@ export const ScheduleScreen: React.FC = () => {
       console.error('Erro ao buscar os agendamentos:', error);
     } finally {
       setLoading(false);
-      setRefreshing(false); // Aqui definimos refreshing como false para indicar que a atualização foi concluída
+      setRefreshing(false);
     }
   };
   const onRefresh = () => {
-    setRefreshing(true); // Ativa o estado de atualização
-    fetchData(); // Chama a função fetchData ao atualizar
+    setRefreshing(true);
+    fetchData();
   };
 
   useEffect(() => {
@@ -73,11 +73,11 @@ export const ScheduleScreen: React.FC = () => {
             <TextInput
               style={styles.searchInput}
               placeholder="Buscar por cliente"
-              placeholderTextColor="#999" // Cor do placeholder
+              placeholderTextColor="#999"
               value={searchText}
               onChangeText={handleSearch}
             />
-            {searchText.length > 0 && ( // Renderiza o botão somente se houver texto no input
+            {searchText.length > 0 && (
               <TouchableOpacity
                 onPress={handleClearText}
                 style={styles.clearButton}>
@@ -93,7 +93,7 @@ export const ScheduleScreen: React.FC = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['#3498db']} // Cor do indicador de atualização
+            colors={['#3498db']}
           />
         }>
         <View style={styles.cardContainer}>
@@ -131,8 +131,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 40,
     borderColor: 'gray',
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     paddingHorizontal: 10,
+    height: 40,
   },
   clearButton: {
     padding: 5,
@@ -141,16 +142,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchInput: {
-    fontSize: 14,
     width: '90%',
+    height: 80,
     borderColor: 'transparent',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 20,
-    backgroundColor: 'white',
     paddingHorizontal: 10,
     color: 'black',
+    margin: 0,
   },
   containerInput: {
     backgroundColor: '#3498db',

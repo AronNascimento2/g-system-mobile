@@ -5,6 +5,7 @@ import {ROUTES_PATHS} from '../../constants/routesPaths';
 import {useAuth} from '../../contexts/AuthProvider';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {LogoutS} from '../logout';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     height: '100%',
-    gap: 30,
+    gap: 20,
   },
   iconContainer: {
     elevation: 5,
@@ -116,15 +117,13 @@ const styles = StyleSheet.create({
   containerLogo: {
     height: 150,
     width: '100%',
-    paddingTop: 10,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
   wrapper: {
     paddingRight: 10,
 
-    paddingTop: 50,
+    paddingTop: 30,
     flex: 1,
     display: 'flex',
     justifyContent: 'center',

@@ -1,36 +1,46 @@
-// AppStack.js
-
-import React from 'react';
+import React, {useRef} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useScrollToTop} from '@react-navigation/native';
 import {ROUTES_PATHS} from '../constants/routesPaths';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHome, faSignOut} from '@fortawesome/free-solid-svg-icons';
-import {LogoutScreen} from './handleLogout';
-import {Text, View, StyleSheet} from 'react-native';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {LogoutModal} from '../screens/Logout';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const StackNavigator = () => (
-  <Stack.Navigator>
-    {ROUTES_PATHS.map(route => (
-      <Stack.Screen
-        key={route.path}
-        name={route.title}
-        component={route.element}
-        options={{headerShown: false}}
-      />
-    ))}
-  </Stack.Navigator>
-);
+const StackNavigator = () => {
+  const scrollRef = useRef(null);
+  useScrollToTop(scrollRef);
+
+  return (
+    <Stack.Navigator>
+      {ROUTES_PATHS.map(route => (
+        <Stack.Screen
+          key={route.path}
+          name={route.title}
+          component={route.element}
+          options={({navigation}) => ({
+            headerLeft: '',
+            headerTitle: '',
+            headerRight: () => <LogoutModal />,
+            headerTintColor: '#333',
+            headerShown: navigation.isFocused(), // Mostra o cabeçalho quando a tela está em foco
+          })}
+        />
+      ))}
+    </Stack.Navigator>
+  );
+};
 
 export const AppStack = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#3498db', // Color for active tab
-        tabBarInactiveTintColor: 'gray', // Color for inactive tab
+        tabBarActiveTintColor: '#3498db',
+        tabBarInactiveTintColor: 'gray',
       }}>
       <Tab.Screen
         name="HomeTab"
@@ -53,29 +63,16 @@ export const AppStack = () => {
           tabBarHideOnKeyboard: true,
         }}
       />
-      <Tab.Screen
-        name="Sair"
-        component={LogoutScreen}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({focused}) => (
-            <View style={styles.tabIconContainer}>
-              <FontAwesomeIcon
-                icon={faSignOut}
-                color={focused ? '#3498db' : 'gray'}
-                size={20}
-              />
-              <Text style={{color: focused ? '#3498db' : 'gray', fontSize: 12}}>
-                Sair
-              </Text>
-            </View>
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };
+
 const styles = StyleSheet.create({
+  headerTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#333',
+  },
   tabIconContainer: {
     position: 'absolute',
     top: 8,

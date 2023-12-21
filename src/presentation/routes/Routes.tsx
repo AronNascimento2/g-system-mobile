@@ -4,9 +4,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {AppStack} from './AppStack';
 import {AuthStack} from './AuthStack';
 import {useAuth} from '../contexts/AuthProvider';
-import {TokenValidityChecker} from '../contexts/AuthProvider/tokenVAlidity';
 import {SplashScreen} from '../screens/SplashScreen/Splash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TokenValidityChecker} from '../contexts/TokenValidity';
 
 export function Router() {
   const {authData} = useAuth();
@@ -47,6 +47,7 @@ export function Router() {
   }
   return (
     <NavigationContainer>
+      <TokenValidityChecker />
       {authData ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );

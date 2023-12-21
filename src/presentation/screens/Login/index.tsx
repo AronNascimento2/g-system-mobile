@@ -199,10 +199,6 @@ export const LoginScreen = () => {
     saveToStorage(key, text);
   };
 
-  if (loading) {
-    return <SplashScreen />;
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
