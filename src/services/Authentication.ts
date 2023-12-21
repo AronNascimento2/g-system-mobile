@@ -5,7 +5,7 @@ export interface AuthData {
     Token: string;
     Expiration?: string;
   };
-  Permissions: string[]; // Adicionando as permissões ao AuthData
+  Permissions: string[];
 }
 
 export interface AuthResponse {
@@ -46,7 +46,6 @@ export const AuthService = async (
       throw new Error(errorText || 'Erro ao autenticar');
     }
   } catch (error: any) {
-    // Aqui, o TypeScript não consegue inferir o tipo do erro, então estamos usando `any`
     throw new Error('Erro ao autenticar: ' + error.message);
   }
 };

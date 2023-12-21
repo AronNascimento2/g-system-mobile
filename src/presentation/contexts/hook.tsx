@@ -2,8 +2,6 @@ import TouchID from 'react-native-touch-id';
 
 export const useBiometricAuthentication = handleSignIn => {
   const optionalConfigObject = {
-    borderRadius: 40, // Adicionando border radius
-    backGroundColor: 'blue', // Mudando a cor de fundo
     title: 'Acesso com digital', // Android
     imageColor: '#3498db', // Android
     imageErrorColor: '#ff0000',
@@ -27,7 +25,6 @@ export const useBiometricAuthentication = handleSignIn => {
           handleSignIn();
         }
       } else {
-        // Biometria não suportada
         console.log('Biometria não suportada neste dispositivo.');
       }
     } catch (error) {
@@ -35,5 +32,5 @@ export const useBiometricAuthentication = handleSignIn => {
     }
   };
 
-  return authenticateWithBiometrics; // Retorna a função de autenticação
+  return authenticateWithBiometrics;
 };

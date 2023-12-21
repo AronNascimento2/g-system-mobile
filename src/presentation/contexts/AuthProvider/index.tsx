@@ -32,7 +32,6 @@ export const AuthProvider: React.FC = ({children}) => {
         const _authData: AuthData = JSON.parse(authDataSerialized);
 
         if (tokenExpired(_authData?.JWT?.Expiration)) {
-          // Se o token estiver expirado, limpe os dados e redirecione para a tela de login
           signOut();
           return;
         }
@@ -40,22 +39,19 @@ export const AuthProvider: React.FC = ({children}) => {
         setAuthData(_authData);
       }
     } catch (error) {
-      // Handle error
     } finally {
       setIsLoading(false);
     }
   }
 
-  // Verifica se o token expirou
   function tokenExpired(expirationDate: string | undefined): boolean {
     if (!expirationDate) {
-      return true; // Se não houver data de expiração, consideramos que o token está expirado
+      return true;
     }
 
     const expiration = new Date(expirationDate).getTime();
     const current = new Date().getTime();
 
-    // Verifica se a hora atual (current) é posterior à hora de expiração (expiration)
     return current > expiration;
   }
 

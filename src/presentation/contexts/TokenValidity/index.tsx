@@ -21,6 +21,5 @@ export const TokenValidityChecker = () => {
     }, [authData, signOut]),
   );
 
-  // Retorne null ou um elemento JSX se necessário
   return null;
 };

@@ -1,12 +1,12 @@
 export const convertToFormattedTime = backgroundTimeMillis => {
-  const backgroundTime = new Date(parseInt(backgroundTimeMillis, 10)); // Convertendo para objeto Date
-  backgroundTime.setHours(backgroundTime.getHours() - 3); // Subtrai 3 horas do horário
+  const backgroundTime = new Date(parseInt(backgroundTimeMillis, 10));
+  backgroundTime.setHours(backgroundTime.getHours() - 3);
 
-  const timeZoneOffset = backgroundTime.getTimezoneOffset(); // Obtém o offset do fuso horário
-  const timeZoneOffsetHours = timeZoneOffset / 60; // Converte o offset para horas
+  const timeZoneOffset = backgroundTime.getTimezoneOffset();
+  const timeZoneOffsetHours = timeZoneOffset / 60;
 
   const formattedTime = backgroundTime
-    .toISOString() // Formata o tempo no formato ISO 8601
+    .toISOString()
     .replace(
       'Z',
       `${timeZoneOffsetHours < 0 ? '+' : '-'}${String(

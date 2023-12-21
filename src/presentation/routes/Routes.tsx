@@ -36,7 +36,7 @@ export function Router() {
 
     const cnpj = await AsyncStorage.getItem('cnpj'),
       handleBiometricAuthentication = () => {
-        authenticateWithBiometrics(); // Chama a função de autenticação
+        authenticateWithBiometrics();
       };
     const {expiration} = await getTokenAndExpiration();
     console.log(nextAppState);
@@ -51,7 +51,7 @@ export function Router() {
 
       const currentTime = Date.now();
       const elapsedTime = currentTime - Number(backgroundTimeMillis);
-      const elapsedMinutes = elapsedTime / (1000 * 60); // Convertendo milissegundos para minutos
+      const elapsedMinutes = elapsedTime / (1000 * 60);
 
       const backgroundTimeFormatted =
         convertToFormattedTime(backgroundTimeMillis);

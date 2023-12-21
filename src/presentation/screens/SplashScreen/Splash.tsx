@@ -7,7 +7,7 @@ export const SplashScreen: React.FC = () => {
       <Image
         source={require('../../../assets/logo.png')}
         style={styles.logo}
-        resizeMode="contain" // Ajusta a imagem para caber no componente Image
+        resizeMode="contain"
       />
       <ActivityIndicator size="large" color="#3498db" />
     </View>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   logo: {
-    width: 200, // Ajuste as dimensões conforme necessário para o seu layout
-    height: 200, // Ajuste as dimensões conforme necessário para o seu layout
+    width: 200,
+    height: 200,
   },
 });

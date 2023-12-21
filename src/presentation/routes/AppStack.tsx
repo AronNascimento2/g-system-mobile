@@ -27,7 +27,7 @@ const StackNavigator = () => {
             headerTitle: '',
             headerRight: () => <LogoutModal />,
             headerTintColor: '#333',
-            headerShown: navigation.isFocused(), // Mostra o cabeçalho quando a tela está em foco
+            headerShown: navigation.isFocused(),
           })}
         />
       ))}

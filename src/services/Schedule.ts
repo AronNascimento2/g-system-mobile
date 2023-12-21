@@ -35,7 +35,7 @@ export const fetchAppointments = async (
     `https://api.gsystem.com.br/api/Agendamentos?Data[Inicial]=${startDate}&Data[Final]=${endDate}`,
     {
       headers: {
-        Authorization: `Bearer ${token}`, // Utiliza o token diretamente no cabeçalho de autorização
+        Authorization: `Bearer ${token}`,
       },
     },
   );

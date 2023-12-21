@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     marginBottom: 5,
-    elevation: 50, // Adiciona uma sombra
+    elevation: 50,
   },
   clientName: {
     fontSize: 18,

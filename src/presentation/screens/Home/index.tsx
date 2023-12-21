@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
   },
   disabledIcon: {
     backgroundColor: '#ccc',
-    color: '#999', // Cor do texto para botão desabilitado
+    color: '#999',
   },
   disabledText: {
-    color: '#999', // Cor do texto para botão desabilitado
+    color: '#999',
   },
   text: {
     fontSize: 16,

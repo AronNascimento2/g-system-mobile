@@ -47,24 +47,20 @@ export const LoginScreen = () => {
     }
   };
 
-  // Chame a função quando o componente for montado
   useEffect(() => {
     checkBiometricStored();
   }, []);
 
-  // ... outras lógicas do componente
   const toggleBiometricLogin = async newValue => {
     try {
       setLoadingToggle(true);
 
       if (!newValue) {
-        // Remover a senha do AsyncStorage e desativar a biometria
         await AsyncStorage.removeItem('password');
         await AsyncStorage.removeItem('biometricEnabled');
-        setBiometricEnabled(false); // Atualizar o estado do toggle
+        setBiometricEnabled(false);
         setLoadingToggle(false);
       } else {
-        // Verificar se todos os campos estão preenchidos
         if (!email || !password || !cnpj) {
           Alert.alert(
             'Preencha todos os campos',
@@ -74,10 +70,9 @@ export const LoginScreen = () => {
           return;
         }
 
-        // Salvar ou atualizar o estado da biometria no AsyncStorage e ativar o toggle
         await AsyncStorage.setItem('biometricEnabled', String(newValue));
         setIsBiometricStored(!newValue);
-        setBiometricEnabled(true); // Atualizar o estado do toggle
+        setBiometricEnabled(true);
         setLoadingToggle(false);
       }
     } catch (error) {
@@ -135,7 +130,6 @@ export const LoginScreen = () => {
     setLoading(true);
     try {
       if (!biometricEnabled) {
-        // Se o toggle estiver desativado, limpe o campo de senha
         setPassword('');
       }
 
@@ -154,16 +148,13 @@ export const LoginScreen = () => {
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       if (biometricEnabled) {
-        // Se estiver ativado, volta o toggle para falso
         setBiometricEnabled(false);
       }
     }
   };
 
   useEffect(() => {
-    // Verifica se o input de senha está vazio e o toggle está desativado
     if (!biometricEnabled) {
-      // Limpa o campo de senha quando o toggle é desativado
       setPassword('');
     }
   }, [biometricEnabled]);
@@ -171,7 +162,7 @@ export const LoginScreen = () => {
   const authenticateWithBiometrics = useBiometricAuthentication(handleSignIn);
 
   const handleBiometricAuthentication = () => {
-    authenticateWithBiometrics(); // Chama a função de autenticação
+    authenticateWithBiometrics();
   };
   const handleInputChange = (text, setter, key) => {
     setter(text);
@@ -200,7 +191,7 @@ export const LoginScreen = () => {
           ) : (
             <>
               <TextInputMask
-                placeholderTextColor="black" // Cor do placeholder
+                placeholderTextColor="black"
                 style={styles.input}
                 placeholder="CNPJ"
                 type={'custom'}
@@ -208,11 +199,11 @@ export const LoginScreen = () => {
                   mask: '99.999.999/9999-99',
                 }}
                 value={cnpj}
-                keyboardType="numeric" // Define o teclado como numérico
+                keyboardType="numeric"
                 onChangeText={text => handleInputChange(text, setCnpj, 'cnpj')}
               />
               <TextInput
-                placeholderTextColor="black" // Cor do placeholder
+                placeholderTextColor="black"
                 style={styles.input}
                 placeholder="Usuario"
                 value={email}
@@ -221,7 +212,7 @@ export const LoginScreen = () => {
                 }
               />
               <TextInput
-                placeholderTextColor="black" // Cor do placeholder
+                placeholderTextColor="black"
                 style={styles.input}
                 placeholder="Senha"
                 secureTextEntry
@@ -241,12 +232,11 @@ export const LoginScreen = () => {
                 <TouchableOpacity
                   style={[
                     styles.button,
-                    {backgroundColor: '#ccc', borderColor: '#999'}, // Ajuste a cor do botão desativado aqui
-                    {opacity: loading ? 0.5 : 1}, // Mantém a opacidade durante o estado de carregamento
+                    {backgroundColor: '#ccc', borderColor: '#999'},
+                    {opacity: loading ? 0.5 : 1},
                   ]}
                   activeOpacity={0.8}
-                  disabled={true} // Altere conforme necessário
-                >
+                  disabled={true}>
                   <Text style={styles.buttonText}>Esqueci a senha</Text>
                 </TouchableOpacity>
               </View>
@@ -338,7 +328,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '80%',
     justifyContent: 'space-between',
-    alignItems: 'center', // Alinha os itens horizontalmente
+    alignItems: 'center',
     display: 'flex',
   },
 });
