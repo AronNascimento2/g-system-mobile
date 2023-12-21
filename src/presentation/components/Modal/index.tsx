@@ -105,17 +105,6 @@ export const CustomModal: React.FC<CustomModalProps> = ({
                 ))}
               </View>
               <View style={styles.itemContainer}>
-                <Text style={styles.label}>Veículos :</Text>
-                {selectedAppointment?.Veiculos.map((veiculo, index) => (
-                  <View key={index}>
-                    <Text style={styles.info}>
-                      [ Código do Veículo: {veiculo.CodigoVeiculo}, Status:
-                      {veiculo.Status}, Veiculo: {veiculo.Veiculo} ]
-                    </Text>
-                  </View>
-                ))}
-              </View>
-              <View style={styles.itemContainer}>
                 <Text style={styles.label}>Verificado:</Text>
                 <Text style={styles.info}>
                   {selectedAppointment.Verificado ? 'Sim' : 'Não'}
