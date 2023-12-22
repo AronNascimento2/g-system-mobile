@@ -112,9 +112,10 @@ const styles = StyleSheet.create({
   nameContainer: {
     height: 60,
     padding: 10,
-    flexDirection: 'column',
+    flexDirection: 'row',
     display: 'flex',
-    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 5,
     backgroundColor: '#3498db',
   },
   heading: {
@@ -146,6 +147,7 @@ const styles = StyleSheet.create({
   },
   codigo: {
     display: 'flex',
+    color: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
